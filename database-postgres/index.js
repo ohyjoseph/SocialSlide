@@ -11,7 +11,8 @@ client.connect((err) => {
 });
 
  function selectUser (params, cb) {
-  client.query('SELECT * FROM tblUsers WHERE username = $1', [params.username], (err, result) => {
+  let queryString = 'SELECT * FROM tblUsers WHERE username = $1';
+  client.query(queryString, [params.username], (err, result) => {
     if (err) {
       return console.error('ERROR running query:', err);
     }
@@ -23,7 +24,8 @@ client.connect((err) => {
 }
 
 function checkLogin (params, cb) {
-  client.query('SELECT * FROM tblUsers WHERE username = $1 AND password = $2', [params.username, params.password], (err, result) => {
+  let queryString = 'SELECT * FROM tblUsers WHERE username = $1 AND password = $2'; 
+  client.query(queryString, [params.username, params.password], (err, result) => {
     if (err) {
       return console.error('ERROR running query:', err);
     }
@@ -38,7 +40,9 @@ function insertUser (params, cb) {
   if (!params.avatarUrl || params.avatarUrl === '') {
     params.avatarUrl = null;
   }
-  client.query('INSERT INTO tblUsers (username, password, avatarUrl) VALUES ($1, $2, $3)', [params.username, params.password, params.avatarUrl], (err, result) => {
+
+  let queryString = 'INSERT INTO tblUsers (username, password, avatarUrl) VALUES ($1, $2, $3)';
+  client.query(queryString, [params.username, params.password, params.avatarUrl], (err, result) => {
     if (err) {
       return console.error('ERROR inserting user:', err);
     }
@@ -47,7 +51,8 @@ function insertUser (params, cb) {
 }
 
 function insertMessage (params, cb) {
-  client.query('INSERT INTO tblDms (sender, receiver, message) VALUES ($1, $2, $3)', [params.sender, params.receiver, params.message], (err, result) => {
+  let queryString = 'INSERT INTO tblDms (sender, receiver, message) VALUES ($1, $2, $3)';
+  client.query(queryString, [params.sender, params.receiver, params.message], (err, result) => {
     if (err) {
       return console.error('ERROR inserting message:', err);
     }
@@ -56,7 +61,8 @@ function insertMessage (params, cb) {
 }
 
 function insertFriendRequest (params, cb) {
-  client.query('INSERT INTO tblFriends (sender, receiver) VALUES ($1, $2)', [params.sender, params.receiver], (err, result) => {
+  let queryString = 'INSERT INTO tblFriends (sender, receiver) VALUES ($1, $2)';
+  client.query(queryString, [params.sender, params.receiver], (err, result) => {
     if (err) {
       return console.error('ERROR inserting friend request:', err);
     }
@@ -64,8 +70,23 @@ function insertFriendRequest (params, cb) {
   });
 }
 
+function updateFriendRequest (params, cb) {
+  let queryString = 'UPDATE tblFriends set wasAccepted = $1 WHERE sender = $2 AND receiver = $3';
+  client.query(queryString, [params.wasAccepted, params.sender, params.receiver], (err, result) => {
+    if (err) {
+      return console.error('ERROR updating friend request:', err);
+    }
+    cb(result);
+  });
+}
+
+//Database method test scripts
+// insertUser({username: 'test', password: 'test'}, (data) => console.log(data));
+// insertUser({username: 'test2', password: 'test2'}, (data) => console.log(data));
 // selectUser ({username:'test'}, (data) => console.log(data));
-// checkLogin({username: 'test8', password: 'test5'}, (data) => console.log(data));
-// insertMessage({sender:'test', receiver:'test3', message: 'pizza tastes really good?'}, (data) => console.log(data));
-insertFriendRequest({sender:'test3', receiver:'test2'}, (data) => console.log(data));
+// checkLogin({username: 'test', password: 'test'}, (data) => console.log(data));
+// insertFriendRequest({sender:'test', receiver:'test2'}, (data) => console.log(data));
+// updateFriendRequest({wasAccepted: true, sender:'test', receiver:'test2'}, (data) => console.log(data));
+// insertMessage({sender:'test', receiver:'test2', message: 'this is a test?'}, (data) => console.log(data));
+
 module.exports.client = client;
