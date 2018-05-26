@@ -1,0 +1,1 @@
+module.exports.localPsqlConString = 'postgres://oh:2112@localhost:5432/slidedb';
