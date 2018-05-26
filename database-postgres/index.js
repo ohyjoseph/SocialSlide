@@ -1,4 +1,5 @@
 const pg = require('pg');
+//$ service postgresql start 
 
 var conString = 'postgres://oh:2112@localhost/slidedb';
 

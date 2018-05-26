@@ -1,26 +1,45 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-// UNCOMMENT THE DATABASE YOU'D LIKE TO USE
-// var items = require('../database-mysql');
-// var items = require('../database-mongo');
+const express = require('express');
+const bodyParser = require('body-parser');
+const db = require('../database-postgres');
+const session = require('express-session');
+const utility = require('./utility');
 
-var app = express();
+const app = express();
 
-// UNCOMMENT FOR REACT
-// app.use(express.static(__dirname + '/../react-client/dist'));
+// Sets location for client pages
+app.use(express.static(__dirname + '/../react-client/dist'));
 
-// UNCOMMENT FOR ANGULAR
-// app.use(express.static(__dirname + '/../angular-client'));
-// app.use(express.static(__dirname + '/../node_modules'));
+let setHeader = (res) => {
+  res.header('access-control-allow-origin', '*');
+  res.header('access-control-allow-methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('access-control-allow-headers', 'content-type, accept');
+  res.header('access-control-max-age', 10);
+  res.set('Content-Type', 'application/json');
+}
 
-app.get('/items', function (req, res) {
-  items.selectAll(function(err, data) {
-    if(err) {
-      res.sendStatus(500);
-    } else {
-      res.json(data);
-    }
-  });
+//Set up middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+// For express-session
+app.set('trust proxy', 1);
+app.use(session({
+  secret: 'slide',
+  cookie: {}
+}));
+
+app.get('/', utility.checkUser, (req, res) => {
+  res.render('index');
+});
+
+app.get('/login', function (req, res) {
+  res.render('login');
+});
+
+app.post('/login', function (req, res) {
+  setHeader(res);
+  console.log(req.body);
+  res.send('asdf')
 });
 
 app.listen(3000, function() {
