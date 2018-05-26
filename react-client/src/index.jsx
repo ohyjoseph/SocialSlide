@@ -1,8 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import List from './components/List.jsx';
 import axios from 'axios';
+import { BrowserRouter as Router} from 'react-router-dom';
+import Route from 'react-router-dom/Route';
+
+import List from './components/List.jsx';
+import Login from './components/Login.jsx';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -20,13 +25,26 @@ class App extends React.Component {
   }
 
   render () {
-    return (<div>
-      <h1>Item List</h1>
-      <List items={this.state.items}/>
-      <button onClick={this.testPost}>
-        Post Test
-      </button>
-    </div>)
+    return (
+      <Router>
+        <div className='App'>
+          <Route path='/' exact strict render={
+            () => {
+              return ( 
+                <div>
+                  <h1>Itemd List</h1>
+                  <List items={this.state.items}/>
+                  <button onClick={this.testPost}>Post Test</button>
+                </div>
+              )
+            }
+          }/>
+
+          <Route path='/login' exact strict component={List}/>
+          
+        </div>
+      </Router>
+    )
   }
 }
 
