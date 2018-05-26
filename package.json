@@ -1,13 +1,15 @@
 {
-  "name": "github-fetcher-fullstack-v2",
+  "name": "social-slide",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "react-dev": "webpack -d --watch",
-    "server-dev": "nodemon server/index.js"
+    "start": "node server/index.js",
+    "server-dev": "nodemon server/index.js",
+    "postinstall": "webpack -p"
   },
-  "author": "Beth Johnson",
+  "author": "Joseph Oh",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.23.1",
@@ -28,5 +30,8 @@
     "pg": "^7.4.3",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
+  },
+  "engines": {
+    "node": "6.11.3"
   }
 }

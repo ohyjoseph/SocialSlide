@@ -8,6 +8,8 @@ const app = express();
 
 // Sets location for client pages
 app.use(express.static(__dirname + '/../react-client/dist'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
 let setHeader = (res) => {
   res.header('access-control-allow-origin', '*');
@@ -20,6 +22,10 @@ let setHeader = (res) => {
 //Set up middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(function(req, res, next){
+  console.log(`Serving ${req.method} on ${req.url}`)
+  next();
+})
 
 // For express-session
 app.set('trust proxy', 1);
@@ -28,7 +34,8 @@ app.use(session({
   cookie: {}
 }));
 
-app.get('/', utility.checkUser, (req, res) => {
+app.get('/', utility.checkUser, function(req, res){
+  console.log('ho')
   res.render('index');
 });
 
