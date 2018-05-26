@@ -1,7 +1,7 @@
 const pg = require('pg');
 //$ service postgresql start 
 
-var conString = process.env.PORT || 'postgres://oh:2112@localhost/slidedb';
+var conString = process.env.DATABASE_URL || 'postgres://oh:2112@localhost/slidedb';
 
 let client = new pg.Client(conString);
 client.connect((err) => {
