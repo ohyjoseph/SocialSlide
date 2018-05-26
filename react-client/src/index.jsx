@@ -8,7 +8,6 @@ import Route from 'react-router-dom/Route';
 import List from './components/List.jsx';
 import Login from './components/Login.jsx';
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
