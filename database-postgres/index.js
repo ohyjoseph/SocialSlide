@@ -90,4 +90,11 @@ function updateFriendRequest (params, cb) {
 // updateFriendRequest({wasAccepted: true, sender:'test', receiver:'test2'}, (data) => console.log(data));
 // insertMessage({sender:'test', receiver:'test2', message: 'this is a test?'}, (data) => console.log(data));
 
-module.exports.client = client;
+module.exports = {
+  insertUser: insertUser,
+  selectUser: selectUser,
+  checkLogin: checkLogin,
+  insertFriendRequest: insertFriendRequest,
+  updateFriendRequest:updateFriendRequest,
+  insertMessage: insertMessage
+}

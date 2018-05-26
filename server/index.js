@@ -53,3 +53,4 @@ app.listen(process.env.PORT || 3000, function() {
   console.log('listening on port 3000!');
 });
 
+db.insertUser({username: 'tesddt', password: 'tesddt'}, (data) => console.log(data));
