@@ -23,12 +23,12 @@ class Login extends React.Component {
   render () {
     return (
     <div>
-      <h1>login</h1>
+      <h1>Login</h1>
       <button onClick={this.login}>
-        Post Test
+        Login Test
       </button>
     </div>)
   }
 }
 
-ReactDOM.render(<Login />, document.getElementById('login'));
+export default Login;

@@ -40,7 +40,7 @@ class App extends React.Component {
             }
           }/>
 
-          <Route path='/login' exact strict component={List}/>
+          <Route path='/login' exact strict component={Login}/>
           
         </div>
       </Router>
