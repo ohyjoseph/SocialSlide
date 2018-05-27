@@ -3,20 +3,28 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../database-postgres');
 const session = require('express-session');
-const utility = require('./utility');
+// const utility = require('./utility');
 
 const app = express();
+
+// Sets location for client pages
+app.use(express.static(__dirname + '/../react-client/dist'));
 
 //Set up middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(function(req, res, next){
-  console.log(`Serving ${req.method} on ${req.url}`)
+  if (req.method === 'POST') {
+    console.log(`POSTING on ${req.url} with ${JSON.stringify(req.body)}`);
+  } else if (req.method === 'POST') {
+    console.log(`GETTING on ${req.url}`);
+  } else {
+    console.error('ERROR with server call');
+  }
+  
   next();
 });
-
-// Sets location for client pages
-app.use(express.static(__dirname + '/../react-client/dist'));
+let log = (data) => console.log(data);
 
 let setHeader = (res) => {
   res.header('access-control-allow-origin', '*');
@@ -42,14 +50,14 @@ app.get('/*', function(req, res) {
 })
 
 // app.get('/login', function (req, res) {
-//   res.render('login');
+//   console.log('LOGIN BODY:', req.body);
 // });
 
-// app.post('/login', function (req, res) {
-//   setHeader(res);
-//   console.log(req.body);
-//   res.send('asdf')
-// });
+app.post('/login', function (req, res) {
+  setHeader(res);
+  db.checkLogin({username: req.body.username, password: req.body.password}, log);
+  res.send('asdf')
+});
 
 app.listen(process.env.PORT || 3000, function() {
   console.log('listening on port 3000!');

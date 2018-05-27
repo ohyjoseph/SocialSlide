@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
-import { BrowserRouter as Router, Link, NavLink, Redirect, Prompt} from 'react-router-dom';
+import { BrowserRouter as Router, Link, Redirect, Prompt} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 
-import List from './components/List.jsx';
+import Navbar from './components/Navbar.jsx';
+import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
 //withRouter 
 //react history
@@ -27,32 +28,16 @@ class App extends React.Component {
   render () {
     return (
       <Router>
-        <div className='App'>
-          <ul>
-            <li>
-              <NavLink to="/" exact activeStyle={
-                { color:'green' }
-              }>Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/login" exact activeStyle={
-                { color:'green' }
-              }>About</NavLink>
-            </li>
-          </ul>
-          <Route path='/' exact strict render={
-            () => {
-              return ( 
-                <div>
-                  <h1>Itemd List</h1>
-                  <List items={this.state.items}/>
-                  <button onClick={this.testPost}>Post Test</button>
-                </div>
-              )
-            }
-          }/>
-          <Route path='/login' exact strict component={Login}/>
-          
+        <div className='app'>
+          <div className='navbar'>
+            <Navbar/>
+          </div>
+          <div className='home'>
+            <Route path='/' exact strict component = {Home}/>
+          </div>
+          <div className='login'>
+            <Route path='/login' exact strict component = {Login}/>
+          </div>
         </div>
       </Router>
     )

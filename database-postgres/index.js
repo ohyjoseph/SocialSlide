@@ -11,11 +11,12 @@ client.connect((err) => {
   return console.log('CONNECTED to postgres slidedb!');
 });
 
- function selectUser (params, cb) {
-  let queryString = 'SELECT * FROM tblUsers WHERE username = $1';
+
+function selectUser (params, cb) {
+  let queryString = 'SELECT username, avatarUrl FROM tblUsers WHERE username = $1';
   client.query(queryString, [params.username], (err, result) => {
     if (err) {
-      return console.error('ERROR running query:', err);
+      return console.error('ERROR selecting DMs:', err);
     }
     if (result.rowCount < 1) {
       return console.error('User does NOT exist');
@@ -24,11 +25,41 @@ client.connect((err) => {
   });
 }
 
+function selectFriendRequests (params, cb) {
+  let queryString = 'SELECT * FROM tblFriends WHERE receiver = $1 AND wasAccepted IS null ORDER BY createdAt';
+  client.query(queryString, [params.receiver], (err, result) => {
+    if (err) {
+      return console.error('ERROR selecting friend requests:', err);
+    }
+    cb(result.rows);
+  });
+}
+
+function selectFriends (params, cb) {
+  let queryString = "SELECT * FROM tblFriends WHERE receiver = $1 AND wasAccepted = 't' ORDER BY createdAt";
+  client.query(queryString, [params.receiver], (err, result) => {
+    if (err) {
+      return console.error('ERROR selecting friends:', err);
+    }
+    cb(result.rows);
+  });
+}
+
+function selectDms (params, cb) {
+  let queryString = 'SELECT sender, receiver, message, createdAt FROM tblDms WHERE (sender = $1 AND receiver = $2) OR (sender = $2 AND receiver = $1) ORDER BY dmId;';
+  client.query(queryString, [params.sender, params.receiver], (err, result) => {
+    if (err) {
+      return console.error('ERROR selecting user:', err);
+    }
+    cb(result.rows);
+  });
+}
+
 function checkLogin (params, cb) {
-  let queryString = 'SELECT * FROM tblUsers WHERE username = $1 AND password = $2'; 
+  let queryString = 'SELECT username, avatarUrl FROM tblUsers WHERE username = $1 AND password = $2'; 
   client.query(queryString, [params.username, params.password], (err, result) => {
     if (err) {
-      return console.error('ERROR running query:', err);
+      return console.error('ERROR checking login:', err);
     }
     if (result.rowCount < 1) {
       return console.error('NOT a correct username and password');
@@ -82,13 +113,28 @@ function updateFriendRequest (params, cb) {
 }
 
 //Database method test scripts
-// insertUser({username: 'test', password: 'test'}, (data) => console.log(data));
-// insertUser({username: 'test2', password: 'test2'}, (data) => console.log(data));
-// selectUser ({username:'test'}, (data) => console.log(data));
-// checkLogin({username: 'test', password: 'test'}, (data) => console.log(data));
-// insertFriendRequest({sender:'test', receiver:'test2'}, (data) => console.log(data));
-// updateFriendRequest({wasAccepted: true, sender:'test', receiver:'test2'}, (data) => console.log(data));
-// insertMessage({sender:'test', receiver:'test2', message: 'this is a test?'}, (data) => console.log(data));
+let log = (data) => console.log(data);
+insertUser({username: 'test', password: 'test'}, log);
+insertUser({username: 'test2', password: 'test2'}, log);
+insertUser({username: 'test3', password: 'test3'}, log);
+insertUser({username: 'test4', password: 'test4'}, log);
+insertUser({username: 'test5', password: 'test5'}, log);
+insertUser({username: 'test6', password: 'test6'}, log);
+checkLogin({username: 'test', password: 'test'}, log);
+insertFriendRequest({sender:'test2', receiver:'test'}, log);
+updateFriendRequest({wasAccepted: true, sender:'test2', receiver:'test'}, log);
+insertFriendRequest({sender:'test3', receiver:'test'}, log);
+insertFriendRequest({sender:'test4', receiver:'test'}, log);
+insertFriendRequest({sender:'test5', receiver:'test'}, log);
+insertFriendRequest({sender:'test6', receiver:'test'}, log);
+insertMessage({sender:'test', receiver:'test2', message: '1st message'}, log);
+insertMessage({sender:'test', receiver:'test2', message: '2nd message'}, log);
+insertMessage({sender:'test2', receiver:'test', message: '3rd message'}, log);
+insertMessage({sender:'test2', receiver:'test3', message: 'Should NOT show up'}, log);
+selectUser({username:'test'}, log);
+selectDms({sender:'test', receiver: 'test2'}, log);
+selectFriendRequests({receiver: 'test'}, log); 
+selectFriends({receiver: 'test'}, log); 
 
 module.exports = {
   insertUser: insertUser,
