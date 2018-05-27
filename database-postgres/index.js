@@ -16,12 +16,12 @@ function selectUser (params, cb) {
   let queryString = 'SELECT username, avatarUrl FROM tblUsers WHERE username = $1';
   client.query(queryString, [params.username], (err, result) => {
     if (err) {
-      return console.error('ERROR selecting DMs:', err);
+      console.error('ERROR selecting DMs:', err);
     }
     if (result.rowCount < 1) {
-      return console.error('User does NOT exist');
+      console.error('User does NOT exist');
     }
-    cb(result.rows);
+    cb(err, result.rows);
   });
 }
 
@@ -29,9 +29,9 @@ function selectFriendRequests (params, cb) {
   let queryString = 'SELECT * FROM tblFriends WHERE receiver = $1 AND wasAccepted IS null ORDER BY createdAt';
   client.query(queryString, [params.receiver], (err, result) => {
     if (err) {
-      return console.error('ERROR selecting friend requests:', err);
+      console.error('ERROR selecting friend requests:', err);
     }
-    cb(result.rows);
+    cb(err, result.rows);
   });
 }
 
@@ -39,9 +39,9 @@ function selectFriends (params, cb) {
   let queryString = "SELECT * FROM tblFriends WHERE receiver = $1 AND wasAccepted = 't' ORDER BY createdAt";
   client.query(queryString, [params.receiver], (err, result) => {
     if (err) {
-      return console.error('ERROR selecting friends:', err);
+      console.error('ERROR selecting friends:', err);
     }
-    cb(result.rows);
+    cb(err, result.rows);
   });
 }
 
@@ -49,9 +49,9 @@ function selectDms (params, cb) {
   let queryString = 'SELECT sender, receiver, message, createdAt FROM tblDms WHERE (sender = $1 AND receiver = $2) OR (sender = $2 AND receiver = $1) ORDER BY dmId;';
   client.query(queryString, [params.sender, params.receiver], (err, result) => {
     if (err) {
-      return console.error('ERROR selecting user:', err);
+      console.error('ERROR selecting user:', err);
     }
-    cb(result.rows);
+    cb(err, result.rows);
   });
 }
 
@@ -59,12 +59,12 @@ function checkLogin (params, cb) {
   let queryString = 'SELECT username, avatarUrl FROM tblUsers WHERE username = $1 AND password = $2'; 
   client.query(queryString, [params.username, params.password], (err, result) => {
     if (err) {
-      return console.error('ERROR checking login:', err);
+      console.error('ERROR checking login:', err);
     }
     if (result.rowCount < 1) {
-      return console.error('NOT a correct username and password');
+      console.error('NOT a correct username and password');
     }
-    cb(result.rows);
+    cb(err, result.rows);
   });
 }
 
@@ -76,9 +76,9 @@ function insertUser (params, cb) {
   let queryString = 'INSERT INTO tblUsers (username, password, avatarUrl) VALUES ($1, $2, $3)';
   client.query(queryString, [params.username, params.password, params.avatarUrl], (err, result) => {
     if (err) {
-      return console.error('ERROR inserting user:', err);
+      console.error('ERROR inserting user:', err);
     }
-    cb(result);
+    cb(err, result);
   });
 }
 
@@ -86,9 +86,9 @@ function insertMessage (params, cb) {
   let queryString = 'INSERT INTO tblDms (sender, receiver, message) VALUES ($1, $2, $3)';
   client.query(queryString, [params.sender, params.receiver, params.message], (err, result) => {
     if (err) {
-      return console.error('ERROR inserting message:', err);
+      console.error('ERROR inserting message:', err);
     }
-    cb(result);
+    cb(err, result);
   });
 }
 
@@ -96,9 +96,9 @@ function insertFriendRequest (params, cb) {
   let queryString = 'INSERT INTO tblFriends (sender, receiver) VALUES ($1, $2)';
   client.query(queryString, [params.sender, params.receiver], (err, result) => {
     if (err) {
-      return console.error('ERROR inserting friend request:', err);
+      console.error('ERROR inserting friend request:', err);
     }
-    cb(result);
+    cb(err, result);
   });
 }
 
@@ -106,9 +106,9 @@ function updateFriendRequest (params, cb) {
   let queryString = 'UPDATE tblFriends set wasAccepted = $1 WHERE sender = $2 AND receiver = $3';
   client.query(queryString, [params.wasAccepted, params.sender, params.receiver], (err, result) => {
     if (err) {
-      return console.error('ERROR updating friend request:', err);
+      console.error('ERROR updating friend request:', err);
     }
-    cb(result);
+    cb(err, result);
   });
 }
 
@@ -139,6 +139,9 @@ function updateFriendRequest (params, cb) {
 module.exports = {
   insertUser: insertUser,
   selectUser: selectUser,
+  selectDms: selectDms,
+  selectFriendRequests: selectFriendRequests,
+  selectFriends: selectFriendRequests,
   checkLogin: checkLogin,
   insertFriendRequest: insertFriendRequest,
   updateFriendRequest:updateFriendRequest,

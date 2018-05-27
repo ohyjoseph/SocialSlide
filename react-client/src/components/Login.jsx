@@ -8,9 +8,11 @@ class Login extends React.Component {
     this.state = { 
       usernameText: '',
       passwordText: '',
-      loggedIn: false,
-      username: '',
-      avatarUrl: undefined
+      session: {
+        loggedIn: false,
+        username: undefined,
+        avatarUrl: undefined
+      }
     }
     this.handleChangeUsernameText = this.handleChangeUsernameText.bind(this);
     this.handleChangePasswordText = this.handleChangePasswordText.bind(this);
@@ -27,13 +29,15 @@ class Login extends React.Component {
   loginHandler() {
     axios.post('/login', {username: this.state.usernameText, password: this.state.passwordText})
       .then((response) => {
-        // console.log(response.data);
+        let session = Object.assign({}, this.state.session);
+        session.loggedIn = true;
+        session.username = response.data[0].username,
+        session.avatarUrl = response.data[0].avatarUrl
+
         this.setState({
-          loggedIn: true,
-          username: response.data[0].username,
-          avatarUrl: response.data[0].avatarUrl
+          session: session
         });
-        console.log(`LOGGED IN: ${this.state.loggedIn} 'USERNAME: ${this.state.username} 'AVATAR: ${this.state.avatarUrl}`);
+        console.log(`LOGGED IN: ${this.state.session.loggedIn} USERNAME: ${this.state.session.username} AVATAR: ${this.state.session.avatarUrl}`);
       }).catch((err) => {
         console.error('ERROR login:', err);
       })

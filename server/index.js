@@ -54,8 +54,14 @@ app.get('/*', function(req, res) {
 // });
 
 app.post('/login', function (req, res) {
-  setHeader(res);
-  db.checkLogin({username: req.body.username, password: req.body.password}, results => res.send(results));
+  // setHeader(res);
+  db.checkLogin({username: req.body.username, password: req.body.password}, (err, results) => {
+    if (err) {
+      return console.log(err)
+      res.send(err);
+    }
+    res.send(results);
+  });
 });
 
 app.listen(process.env.PORT || 3000, function() {
