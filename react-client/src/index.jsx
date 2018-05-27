@@ -7,6 +7,7 @@ import Route from 'react-router-dom/Route';
 import Navbar from './components/Navbar.jsx';
 import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
+import Signup from './components/Signup.jsx';
 //withRouter 
 //react history
 class App extends React.Component {
@@ -30,7 +31,10 @@ class App extends React.Component {
             )}/>
           </div>
           <div className='login'>
-            <Route path='/login' exact strict component = {Login}/>
+            {/* <Route path='/login' exact strict component = {Login}/> */}
+            <Route path='/login' exact strict render={() => (
+              window.localStorage.getItem('loggedIn') !== 'true' ? (<div><Login /> <Signup /></div>) : (<Redirect to='/' />)
+            )}/>
           </div>
         </div>
       </Router>

@@ -49,15 +49,22 @@ app.get('/*', function(req, res) {
   })
 });
 
-// app.get('/login', function (req, res) {
-//   console.log('LOGIN BODY:', req.body);
-// });
-
 app.post('/login', function (req, res) {
   // setHeader(res);
   db.checkLogin({username: req.body.username, password: req.body.password}, (err, results) => {
     if (err) {
-      return console.log(err)
+      console.log(err)
+      res.send(err);
+    }
+    res.send(results);
+  });
+});
+
+app.post('/signup', function (req, res) {
+  // setHeader(res);
+  db.insertUser({username: req.body.username, password: req.body.password, avatarUrl: req.body.avatarUrl}, (err, results) => {
+    if (err) {
+      console.log(err)
       res.send(err);
     }
     res.send(results);

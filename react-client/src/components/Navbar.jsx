@@ -1,7 +1,17 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
+import { BrowserRouter as Router, Link, Redirect, Prompt} from 'react-router-dom';
 
-const ListItem = (props) => (  
+const Navbar = (props) => {
+  
+  let logoutHander = () => {
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('username');
+    localStorage.removeItem('avatarUrl');
+    console.log('LOGGED OUT');
+  }
+
+  return (
     <ul>
       <li>
         <NavLink to="/" exact activeStyle={
@@ -13,7 +23,13 @@ const ListItem = (props) => (
           { color:'green' }
         }>Login</NavLink>
       </li>
+      <li>
+        <button onClick={logoutHander}>
+          Logout
+        </button>
+      </li>
     </ul>
-)
+  )
+}
 
-export default ListItem;
+export default Navbar;
