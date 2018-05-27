@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
-import { BrowserRouter as Router} from 'react-router-dom';
+import { BrowserRouter as Router, Link, NavLink, Redirect, Prompt} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 
 import List from './components/List.jsx';
@@ -28,6 +28,18 @@ class App extends React.Component {
     return (
       <Router>
         <div className='App'>
+          <ul>
+            <li>
+              <NavLink to="/" exact activeStyle={
+                { color:'green' }
+              }>Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/login" exact activeStyle={
+                { color:'green' }
+              }>About</NavLink>
+            </li>
+          </ul>
           <Route path='/' exact strict render={
             () => {
               return ( 
@@ -39,12 +51,7 @@ class App extends React.Component {
               )
             }
           }/>
-          <Route path='/login' render={
-            () => {
-              return (<h1>adsf</h1>)
-            }
-          }/>
-          {/* <Route path='/login' exact strict component={Login}/> */}
+          <Route path='/login' exact strict component={Login}/>
           
         </div>
       </Router>

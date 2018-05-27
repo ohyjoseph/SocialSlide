@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../database-postgres');
@@ -11,14 +12,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(function(req, res, next){
   console.log(`Serving ${req.method} on ${req.url}`)
-  // console.log(`Session: ${req.session}`)
   next();
 });
 
 // Sets location for client pages
 app.use(express.static(__dirname + '/../react-client/dist'));
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
 
 let setHeader = (res) => {
   res.header('access-control-allow-origin', '*');
@@ -35,21 +33,23 @@ app.use(session({
   cookie: {}
 }));
 
-app.get('/', utility.checkUser, function(req, res){
-  console.log('ho')
-  utility.checkUser();
-  res.render('index');
-});
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, '../react-client/dist/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
-app.get('/login', function (req, res) {
-  res.render('login');
-});
+// app.get('/login', function (req, res) {
+//   res.render('login');
+// });
 
-app.post('/login', function (req, res) {
-  setHeader(res);
-  console.log(req.body);
-  res.send('asdf')
-});
+// app.post('/login', function (req, res) {
+//   setHeader(res);
+//   console.log(req.body);
+//   res.send('asdf')
+// });
 
 app.listen(process.env.PORT || 3000, function() {
   console.log('listening on port 3000!');
