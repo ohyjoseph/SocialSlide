@@ -8,13 +8,7 @@ class Login extends React.Component {
     this.state = { 
       usernameText: '',
       passwordText: '',
-      session: {
-        loggedIn: false,
-        username: undefined,
-        avatarUrl: undefined
-      }
     }
-    console.log(this.props);
     this.handleChangeUsernameText = this.handleChangeUsernameText.bind(this);
     this.handleChangePasswordText = this.handleChangePasswordText.bind(this);
   }
@@ -30,15 +24,11 @@ class Login extends React.Component {
   loginHandler() {
     axios.post('/login', {username: this.state.usernameText, password: this.state.passwordText})
       .then((response) => {
-        let session = Object.assign({}, this.state.session);
-        session.loggedIn = true;
-        session.username = response.data[0].username,
-        session.avatarUrl = response.data[0].avatarUrl
+        window.localStorage.setItem('loggedIn', 'true');
+        window.localStorage.setItem('username', response.data[0].username);
+        window.localStorage.setItem('avatarUrl', response.data[0].avatarUrl);
 
-        this.setState({
-          session: session
-        });
-        console.log(`LOGGED IN: ${this.state.session.loggedIn} USERNAME: ${this.state.session.username} AVATAR: ${this.state.session.avatarUrl}`);
+        console.log(`LOGGED IN: ${window.localStorage.getItem('loggedIn')} USERNAME: ${window.localStorage.getItem('username')} AVATAR: ${window.localStorage.getItem('avatarUrl')}`);
       }).catch((err) => {
         console.error('ERROR login:', err);
       })

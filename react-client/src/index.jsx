@@ -12,13 +12,8 @@ import Login from './components/Login.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      session: {
-        loggedIn: false,
-        username: undefined,
-        avatarUrl: undefined
-      }
-    }
+    console.log(window.localStorage)
+    console.log(`LOGGED IN: ${window.localStorage.getItem('loggedIn')} USERNAME: ${window.localStorage.getItem('username')} AVATAR: ${window.localStorage.getItem('avatarUrl')}`);
   }
 
   render () {
@@ -29,7 +24,10 @@ class App extends React.Component {
             <Navbar/>
           </div>
           <div className='home'>
-            <Route path='/' exact strict component = {Home}/>
+            {/* <Route path='/' exact strict component = {Home}/> */}
+            <Route path='/' exact strict render={() => (
+              window.localStorage.getItem('loggedIn') === 'true' ? (<Home />) : (<Redirect to='/login' />)
+            )}/>
           </div>
           <div className='login'>
             <Route path='/login' exact strict component = {Login}/>
