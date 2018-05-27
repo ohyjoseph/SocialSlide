@@ -14,6 +14,7 @@ class Login extends React.Component {
         avatarUrl: undefined
       }
     }
+    console.log(this.props);
     this.handleChangeUsernameText = this.handleChangeUsernameText.bind(this);
     this.handleChangePasswordText = this.handleChangePasswordText.bind(this);
   }

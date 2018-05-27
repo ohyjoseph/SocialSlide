@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import axios from 'axios';
 import { BrowserRouter as Router, Link, Redirect, Prompt} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 
@@ -14,15 +13,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      items: []
+      session: {
+        loggedIn: false,
+        username: undefined,
+        avatarUrl: undefined
+      }
     }
-  }
-
-  testPost() {
-    axios.post('/login', {username: 'he', password: 'as'})
-      .then((response) => {
-        console.log(response);
-      })
   }
 
   render () {
