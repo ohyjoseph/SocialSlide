@@ -113,28 +113,28 @@ function updateFriendRequest (params, cb) {
 }
 
 //Database method test scripts
-let log = (data) => console.log(data);
-insertUser({username: 'test', password: 'test'}, log);
-insertUser({username: 'test2', password: 'test2'}, log);
-insertUser({username: 'test3', password: 'test3'}, log);
-insertUser({username: 'test4', password: 'test4'}, log);
-insertUser({username: 'test5', password: 'test5'}, log);
-insertUser({username: 'test6', password: 'test6'}, log);
-checkLogin({username: 'test', password: 'test'}, log);
-insertFriendRequest({sender:'test2', receiver:'test'}, log);
-updateFriendRequest({wasAccepted: true, sender:'test2', receiver:'test'}, log);
-insertFriendRequest({sender:'test3', receiver:'test'}, log);
-insertFriendRequest({sender:'test4', receiver:'test'}, log);
-insertFriendRequest({sender:'test5', receiver:'test'}, log);
-insertFriendRequest({sender:'test6', receiver:'test'}, log);
-insertMessage({sender:'test', receiver:'test2', message: '1st message'}, log);
-insertMessage({sender:'test', receiver:'test2', message: '2nd message'}, log);
-insertMessage({sender:'test2', receiver:'test', message: '3rd message'}, log);
-insertMessage({sender:'test2', receiver:'test3', message: 'Should NOT show up'}, log);
-selectUser({username:'test'}, log);
-selectDms({sender:'test', receiver: 'test2'}, log);
-selectFriendRequests({receiver: 'test'}, log); 
-selectFriends({receiver: 'test'}, log); 
+// let log = (data) => console.log(data);
+// insertUser({username: 'test', password: 'test'}, log);
+// insertUser({username: 'test2', password: 'test2'}, log);
+// insertUser({username: 'test3', password: 'test3'}, log);
+// insertUser({username: 'test4', password: 'test4'}, log);
+// insertUser({username: 'test5', password: 'test5'}, log);
+// insertUser({username: 'test6', password: 'test6'}, log);
+// checkLogin({username: 'test', password: 'test'}, log);
+// insertFriendRequest({sender:'test2', receiver:'test'}, log);
+// updateFriendRequest({wasAccepted: true, sender:'test2', receiver:'test'}, log);
+// insertFriendRequest({sender:'test3', receiver:'test'}, log);
+// insertFriendRequest({sender:'test4', receiver:'test'}, log);
+// insertFriendRequest({sender:'test5', receiver:'test'}, log);
+// insertFriendRequest({sender:'test6', receiver:'test'}, log);
+// insertMessage({sender:'test', receiver:'test2', message: '1st message'}, log);
+// insertMessage({sender:'test', receiver:'test2', message: '2nd message'}, log);
+// insertMessage({sender:'test2', receiver:'test', message: '3rd message'}, log);
+// insertMessage({sender:'test2', receiver:'test3', message: 'Should NOT show up'}, log);
+// selectUser({username:'test'}, log);
+// selectDms({sender:'test', receiver: 'test2'}, log);
+// selectFriendRequests({receiver: 'test'}, log); 
+// selectFriends({receiver: 'test'}, log); 
 
 module.exports = {
   insertUser: insertUser,
