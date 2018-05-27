@@ -15,15 +15,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(function(req, res, next){
   if (req.method === 'POST') {
-    console.log(`POSTING on ${req.url} with ${JSON.stringify(req.body)}`);
-  } else if (req.method === 'POST') {
-    console.log(`GETTING on ${req.url}`);
+    console.log(`POSTING to ${req.url} with ${JSON.stringify(req.body)}`);
+  } else if (req.method === 'GET') {
+    console.log(`GETTING ${req.url}`);
   } else {
     console.error('ERROR with server call');
   }
-  
   next();
 });
+
 let log = (data) => console.log(data);
 
 let setHeader = (res) => {
@@ -47,7 +47,7 @@ app.get('/*', function(req, res) {
       res.status(500).send(err)
     }
   })
-})
+});
 
 // app.get('/login', function (req, res) {
 //   console.log('LOGIN BODY:', req.body);
@@ -55,8 +55,7 @@ app.get('/*', function(req, res) {
 
 app.post('/login', function (req, res) {
   setHeader(res);
-  db.checkLogin({username: req.body.username, password: req.body.password}, log);
-  res.send('asdf')
+  db.checkLogin({username: req.body.username, password: req.body.password}, results => res.send(results));
 });
 
 app.listen(process.env.PORT || 3000, function() {
