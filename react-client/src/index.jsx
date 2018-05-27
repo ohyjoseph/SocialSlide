@@ -7,7 +7,8 @@ import Route from 'react-router-dom/Route';
 
 import List from './components/List.jsx';
 import Login from './components/Login.jsx';
-
+//withRouter 
+//react history
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -38,8 +39,12 @@ class App extends React.Component {
               )
             }
           }/>
-
-          <Route path='/login' exact strict component={Login}/>
+          <Route path='/login' render={
+            () => {
+              return (<h1>adsf</h1>)
+            }
+          }/>
+          {/* <Route path='/login' exact strict component={Login}/> */}
           
         </div>
       </Router>

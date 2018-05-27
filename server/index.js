@@ -6,6 +6,15 @@ const utility = require('./utility');
 
 const app = express();
 
+//Set up middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(function(req, res, next){
+  console.log(`Serving ${req.method} on ${req.url}`)
+  // console.log(`Session: ${req.session}`)
+  next();
+});
+
 // Sets location for client pages
 app.use(express.static(__dirname + '/../react-client/dist'));
 app.engine('html', require('ejs').renderFile);
@@ -19,14 +28,6 @@ let setHeader = (res) => {
   res.set('Content-Type', 'application/json');
 }
 
-//Set up middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(function(req, res, next){
-  console.log(`Serving ${req.method} on ${req.url}`)
-  next();
-})
-
 // For express-session
 app.set('trust proxy', 1);
 app.use(session({
@@ -36,6 +37,7 @@ app.use(session({
 
 app.get('/', utility.checkUser, function(req, res){
   console.log('ho')
+  utility.checkUser();
   res.render('index');
 });
 
