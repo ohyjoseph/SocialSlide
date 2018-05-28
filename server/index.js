@@ -18,6 +18,8 @@ app.use(function(req, res, next){
     console.log(`POSTING to ${req.url} with ${JSON.stringify(req.body)}`);
   } else if (req.method === 'GET') {
     console.log(`GETTING ${req.url}`);
+  } else if (req.method === 'PUT') {
+    console.log(`PUTTING to ${req.url} with ${JSON.stringify(req.body)}`);
   } else {
     console.error('ERROR with server call');
   }
@@ -85,6 +87,18 @@ app.post('/signup', function (req, res) {
 app.post('/friendrequest', function (req, res) {
   // setHeader(res);
   db.insertFriendRequest({sender: req.body.sender, receiver: req.body.receiver}, (err, results) => {
+    if (err) {
+      console.log(err)
+      res.send(err);
+    }
+    res.send(results);
+  });
+});
+
+app.put('/friendrequest', function (req, res) {
+  // setHeader(res);
+  console.log('friend put')
+  db.updateFriendRequest({sender: req.body.sender, receiver: req.body.receiver, wasAccepted: req.body.wasAccepted}, (err, results) => {
     if (err) {
       console.log(err)
       res.send(err);
