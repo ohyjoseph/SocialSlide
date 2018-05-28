@@ -32,7 +32,7 @@ class Home extends React.Component {
   render () {
     return (
       <div>
-        <h2>Home</h2>
+        <h2>Welcome {window.localStorage.username}</h2>
         <span><input className="form-control" type="text" value={this.state.friendText} onChange={this.handleChangeFriendText}/> </span>
         <button onClick={() => (this.sendFriendRequestHandler())}> Send Friend Request </button>
         <FriendRequestList />

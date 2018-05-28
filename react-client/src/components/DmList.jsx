@@ -30,10 +30,12 @@ class DmList extends React.Component {
   render () {
     return (
       <div>
-      <h4>Direct Message</h4>
-        {this.state.dms.map((dm, ind) =>
-          <DmListEntry key={ind} dm={dm}/>
-        )}
+        <h4>Direct Message</h4>
+        <div style={{overflow: 'auto', width:'300px', height:'200px'}}>
+            {this.state.dms.map((dm, ind) =>
+              <DmListEntry key={ind} dm={dm}/>
+            )}
+        </div>
       </div>
     )
   }

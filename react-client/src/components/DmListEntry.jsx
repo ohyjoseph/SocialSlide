@@ -4,9 +4,13 @@ const DmListEntry = (props) => {
 
   return (
     <div>
-      {props.dm.sender}
-      {props.dm.receiver}
-      {props.dm.message}
+      <div>
+        {props.dm.sender}
+      </div>
+      <div>
+        {props.dm.message}
+      </div>
+      <br></br>
     </div>
   )
 }
