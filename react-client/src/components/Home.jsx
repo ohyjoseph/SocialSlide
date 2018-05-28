@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import FriendRequestList from './FriendRequestList.jsx';
+import FriendList from './FriendList.jsx';
 
 class Home extends React.Component {
   constructor(props) {
@@ -33,6 +35,8 @@ class Home extends React.Component {
         <h2>Home</h2>
         <span><input className="form-control" type="text" value={this.state.friendText} onChange={this.handleChangeFriendText}/> </span>
         <button onClick={() => (this.sendFriendRequestHandler())}> Send Friend Request </button>
+        <FriendRequestList />
+        <FriendList />
       </div>
     )
   }

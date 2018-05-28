@@ -55,7 +55,7 @@ app.post('/login', function (req, res) {
   // setHeader(res);
   db.checkLogin({username: req.body.username, password: req.body.password}, (err, results) => {
     if (err) {
-      console.log(err)
+      console.error(err);
       res.send(err);
     }
     res.send(results);
@@ -66,7 +66,7 @@ app.post('/friendrequests', function (req, res) {
   // setHeader(res);
   db.selectFriendRequests({receiver: req.body.receiver}, (err, results) => {
     if (err) {
-      console.log(err)
+      console.error(err);
       res.send(err);
     }
     res.send(results);
@@ -77,7 +77,7 @@ app.post('/signup', function (req, res) {
   // setHeader(res);
   db.insertUser({username: req.body.username, password: req.body.password, avatarUrl: req.body.avatarUrl}, (err, results) => {
     if (err) {
-      console.log(err)
+      console.error(err);
       res.send(err);
     }
     res.send(results);
@@ -88,7 +88,19 @@ app.post('/friendrequest', function (req, res) {
   // setHeader(res);
   db.insertFriendRequest({sender: req.body.sender, receiver: req.body.receiver}, (err, results) => {
     if (err) {
-      console.log(err)
+      console.error(err);
+      res.send(err);
+    }
+    res.send(results);
+  });
+});
+
+app.post('/friends', function (req, res) {
+  // setHeader(res);
+  console.log('FRIENDS:', req.body.username)
+  db.selectFriends({username: req.body.username}, (err, results) => {
+    if (err) {
+      console.error(err);
       res.send(err);
     }
     res.send(results);
@@ -100,7 +112,7 @@ app.put('/friendrequest', function (req, res) {
   console.log('friend put')
   db.updateFriendRequest({sender: req.body.sender, receiver: req.body.receiver, wasAccepted: req.body.wasAccepted}, (err, results) => {
     if (err) {
-      console.log(err)
+      console.error(err);
       res.send(err);
     }
     res.send(results);
