@@ -8,6 +8,9 @@ const DmListEntry = (props) => {
         <b>{props.dm.sender}</b>
       </div>
       <div>
+        {props.dm.createdat}
+      </div>
+      <div>
         {props.dm.message}
       </div>
       <br></br>

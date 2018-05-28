@@ -36,8 +36,7 @@ function selectFriendRequests (params, cb) {
 }
 
 function selectFriends (params, cb) {
-  // let queryString = "SELECT * FROM tblFriends WHERE (receiver = $1 or sender = $1) AND wasAccepted = 't' ORDER BY createdAt";
-  let queryString = "SELECT u.username, u.avatarUrl, f.createdAt FROM tblFriends f inner join tblUsers u on f.sender = u.username or f.receiver = u.username WHERE (receiver = $1 or sender = $1) and u.username != $1 AND wasAccepted = 't' ORDER BY f.createdAt;";
+  let queryString = "SELECT u.username, u.avatarUrl, f.createdAt, count(d.message) FROM (tblFriends f inner join tblUsers u on f.sender = u.username or f.receiver = u.username) left outer join tblDms d on u.username = d.receiver WHERE (f.receiver = $1 or f.sender = $1) and u.username != $1 AND wasAccepted = 't' group by u.username, u.avatarUrl, f.createdAt order by count(d.message) desc;"
   client.query(queryString, [params.username], (err, result) => {
     if (err) {
       console.error('ERROR selecting friends:', err);
