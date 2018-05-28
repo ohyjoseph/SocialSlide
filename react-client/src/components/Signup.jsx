@@ -33,8 +33,10 @@ class Signup extends React.Component {
             window.localStorage.setItem('avatarUrl', this.state.avatarUrl);
           }
           console.log(`LOGGED IN: ${window.localStorage.getItem('loggedIn')} USERNAME: ${window.localStorage.getItem('username')} AVATAR: ${window.localStorage.getItem('avatarUrl')}`);
+          window.alert('Welcome to Slide!');
         } else {
           console.error('ERROR username already exists');
+          window.alert('Username already exists');
         }
       }).catch((err) => {
         console.error('ERROR signup:', err);

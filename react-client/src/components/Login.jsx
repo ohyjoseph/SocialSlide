@@ -23,11 +23,14 @@ class Login extends React.Component {
   loginHandler() {
     axios.post('/login', {username: this.state.usernameText, password: this.state.passwordText})
       .then((response) => {
-        window.localStorage.setItem('loggedIn', 'true');
-        window.localStorage.setItem('username', response.data[0].username);
-        window.localStorage.setItem('avatarUrl', response.data[0].avatarUrl);
-
-        console.log(`LOGGED IN: ${window.localStorage.getItem('loggedIn')} USERNAME: ${window.localStorage.getItem('username')} AVATAR: ${window.localStorage.getItem('avatarUrl')}`);
+        if(response.data.length > 0) {
+          window.localStorage.setItem('loggedIn', 'true');
+          window.localStorage.setItem('username', response.data[0].username);
+          window.localStorage.setItem('avatarUrl', response.data[0].avatarUrl);
+          console.log(`LOGGED IN: ${window.localStorage.getItem('loggedIn')} USERNAME: ${window.localStorage.getItem('username')} AVATAR: ${window.localStorage.getItem('avatarUrl')}`);
+        } else {
+          window.alert('Not a correct username and password');
+        }
       }).catch((err) => {
         console.error('ERROR login:', err);
       })
