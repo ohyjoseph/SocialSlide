@@ -24,10 +24,10 @@ let rejectFriendRequestHandler = () => {
   return (
     <div>
       {props.friendRequest.sender}
-      <button onClick={acceptFriendRequestHandler}>
+      <button className='btn-sm btn-success' onClick={acceptFriendRequestHandler}>
         Accept
       </button>
-      <button onClick={rejectFriendRequestHandler}>
+      <button className='btn-sm btn-danger' onClick={rejectFriendRequestHandler}>
         Reject
       </button>
       {/* <a href={props.repo.user_url}><img src={props.repo.avatar} alt={props.repo.username} width="60" /></a> <a href={props.repo.repo_url}>{props.repo.repo_name}</a> */}

@@ -46,10 +46,11 @@ class Signup extends React.Component {
   render () {
     return (
       <div>
+        <br></br>
         <h1>Signup</h1>
         <span> Username <input className="form-control" type="text" value={this.state.usernameText} onChange={this.handleChangeUsernameText}/> </span>
         <span> Password <input className="form-control" type="password" value={this.state.passwordText} onChange={this.handleChangePasswordText}/> </span>
-        <button onClick={() => (this.signupHandler())}> Signup </button>
+        <button className='btn btn-success' onClick={() => (this.signupHandler())}> Signup </button>
       </div>
     )
   }
