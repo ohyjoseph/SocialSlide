@@ -11,6 +11,7 @@ class Signup extends React.Component {
     }
     this.handleChangeUsernameText = this.handleChangeUsernameText.bind(this);
     this.handleChangePasswordText = this.handleChangePasswordText.bind(this);
+    this.handleKeyPressEnter = this.handleKeyPressEnter.bind(this);
   }
 
   handleChangeUsernameText(event) {
@@ -19,6 +20,12 @@ class Signup extends React.Component {
 
   handleChangePasswordText(event) {
     this.setState({passwordText: event.target.value});
+  }
+
+  handleKeyPressEnter(event) {
+    if(event.key == 'Enter'){
+      this.signupHandler();
+    }
   }
 
   signupHandler() {
@@ -34,6 +41,7 @@ class Signup extends React.Component {
           }
           console.log(`LOGGED IN: ${window.localStorage.getItem('loggedIn')} USERNAME: ${window.localStorage.getItem('username')} AVATAR: ${window.localStorage.getItem('avatarUrl')}`);
           window.alert('Welcome to Slide!');
+          window.location.reload();
         } else {
           console.error('ERROR username already exists');
           window.alert('Username already exists');
@@ -48,8 +56,8 @@ class Signup extends React.Component {
       <div>
         <br></br>
         <h1>Signup</h1>
-        <span> Username <input className="form-control" type="text" value={this.state.usernameText} onChange={this.handleChangeUsernameText}/> </span>
-        <span> Password <input className="form-control" type="password" value={this.state.passwordText} onChange={this.handleChangePasswordText}/> </span>
+        <span> Username <input className="form-control" type="text" value={this.state.usernameText} onChange={this.handleChangeUsernameText} onKeyPress={this.handleKeyPressEnter}/> </span>
+        <span> Password <input className="form-control" type="password" value={this.state.passwordText} onChange={this.handleChangePasswordText} onKeyPress={this.handleKeyPressEnter}/> </span>
         <button className='btn btn-success' onClick={() => (this.signupHandler())}> Signup </button>
       </div>
     )

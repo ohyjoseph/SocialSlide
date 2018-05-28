@@ -9,6 +9,7 @@ const Navbar = (props) => {
     localStorage.removeItem('username');
     localStorage.removeItem('avatarUrl');
     console.log('LOGGED OUT');
+    window.location.reload();
   }
 
   return (

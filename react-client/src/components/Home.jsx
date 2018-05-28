@@ -10,10 +10,17 @@ class Home extends React.Component {
       friendText: ''
     }
     this.handleChangeFriendText = this.handleChangeFriendText.bind(this);
+    this.handleKeyPressEnter = this.handleKeyPressEnter.bind(this);
   }
 
   handleChangeFriendText(event) {
     this.setState({friendText: event.target.value});
+  }
+
+  handleKeyPressEnter(event) {
+    if(event.key == 'Enter'){
+      this.sendFriendRequestHandler();
+    }
   }
 
   sendFriendRequestHandler() {
@@ -34,7 +41,7 @@ class Home extends React.Component {
       <div>
         <h2>Welcome {window.localStorage.username}</h2>
         <nav className="navbar navbar-light bg-light form-inline">
-          <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value={this.state.friendText} onChange={this.handleChangeFriendText}/>
+          <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value={this.state.friendText} onChange={this.handleChangeFriendText} onKeyPress={this.handleKeyPressEnter}/>
           <button className="btn btn-outline-info my-2 my-sm-0" onClick={() => (this.sendFriendRequestHandler())}> Send Friend Request </button>
         </nav>
         <FriendRequestList />
