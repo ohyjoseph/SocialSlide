@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import DmListEntry from './DmListEntry.jsx';
+import $ from 'jquery';
 
 class DmList extends React.Component {  
   constructor(props) {
@@ -11,6 +12,7 @@ class DmList extends React.Component {
     }
     this.selectDmsHandler = this.selectDmsHandler.bind(this);
     this.handleChangeMessageText = this.handleChangeMessageText.bind(this);
+    this.handleKeyPressEnter = this.handleKeyPressEnter.bind(this);
   }
 
   componentWillMount() {
@@ -20,6 +22,12 @@ class DmList extends React.Component {
 
   handleChangeMessageText(event) {
     this.setState({messageText: event.target.value});
+  }
+
+  handleKeyPressEnter(event) {
+    if(event.key == 'Enter'){
+      this.sendMessageHandler();
+    }
   }
 
   getParameterByName(name, url) {
@@ -48,6 +56,10 @@ class DmList extends React.Component {
     axios.post('/senddm', {sender: window.localStorage.username, receiver: this.getParameterByName('username', window.location.href), message: this.state.messageText})
       .then((response) => {
         console.log('MESSAGE SENT');
+        $('.form-control').val('');
+        this.setState({
+          messageText: ''
+        })
       }).catch((err) => {
         console.error('ERROR sending message:', err);
       })
@@ -57,9 +69,9 @@ class DmList extends React.Component {
     return (
       <div>
         <h4>Direct Message</h4>
-        <span><input className="form-control" type="text" value={this.state.passwordText} onChange={this.handleChangeMessageText}/> </span>
+        <span><input className="form-control" type="text" value={this.state.passwordText} onChange={this.handleChangeMessageText} onKeyPress={this.handleKeyPressEnter}/></span>
         <button onClick={() => (this.sendMessageHandler())}> Send </button>
-        <div style={{overflow: 'auto', width:'300px', height:'200px'}}>
+        <div style={{overflow: 'auto', width:'500px', height:'800px'}}>
             {this.state.dms.map((dm, ind) =>
               <DmListEntry key={ind} dm={dm}/>
             )}
