@@ -36,8 +36,8 @@ function selectFriendRequests (params, cb) {
 }
 
 function selectFriends (params, cb) {
-  let queryString = "SELECT * FROM tblFriends WHERE receiver = $1 AND wasAccepted = 't' ORDER BY createdAt";
-  client.query(queryString, [params.receiver], (err, result) => {
+  let queryString = "SELECT * FROM tblFriends WHERE (receiver = $1 or sender = $1) AND wasAccepted = 't' ORDER BY createdAt";
+  client.query(queryString, [params.username], (err, result) => {
     if (err) {
       console.error('ERROR selecting friends:', err);
     }
@@ -145,7 +145,7 @@ module.exports = {
   selectUser: selectUser,
   selectDms: selectDms,
   selectFriendRequests: selectFriendRequests,
-  selectFriends: selectFriendRequests,
+  selectFriends: selectFriends,
   checkLogin: checkLogin,
   insertFriendRequest: insertFriendRequest,
   updateFriendRequest:updateFriendRequest,

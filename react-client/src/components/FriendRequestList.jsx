@@ -23,7 +23,7 @@ class FriendRequestList extends React.Component {
           friendRequests: response.data
         });
       }).catch((err) => {
-        console.error('ERROR select friend requests:', err);
+        console.error('ERROR selecting friend requests:', err);
       })
   }
   
