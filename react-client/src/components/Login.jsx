@@ -42,7 +42,7 @@ class Login extends React.Component {
         <h1>Login</h1>
         <span> Username <input className="form-control" type="text" value={this.state.usernameText} onChange={this.handleChangeUsernameText}/> </span>
         <span> Password <input className="form-control" type="password" value={this.state.passwordText} onChange={this.handleChangePasswordText}/> </span>
-        <button onClick={() => (this.loginHandler())}> Login </button>
+        <button className='btn btn-primary' onClick={() => (this.loginHandler())}> Login </button>
       </div>
     )
   }

@@ -23,27 +23,29 @@ class App extends React.Component {
   render () {
     return (
       <Router>
-        <div className='app'>
-          <div className='navbar'>
-            <Navbar/>
-          </div>
-            {/* <Route path='/' exact strict component = {Home}/> */}
-          <div className='home'>
-            <Route path='/' exact strict render={() => (
-              window.localStorage.getItem('loggedIn') === 'true' ? (<Home />) : (<Redirect to='/login' />)
-            )}/>
-          </div>
-            {/* <Route path='/login' exact strict component = {Login}/> */}
-          <div className='login'>
-            <Route path='/login' exact strict render={() => (
-              window.localStorage.getItem('loggedIn') !== 'true' ? (<div><Login /> <Signup /></div>) : (<Redirect to='/' />)
-            )}/>
-          </div>
-          <div className='dm'>
-            {/* <Route path='/dm' exact strict component={DmList} /> */}
-            <Route path='/dm' exact strict render={() => (
-              window.localStorage.getItem('loggedIn') === 'true' ? (<div><DmList location={this.props.location}/></div>) : (<Redirect to='/' />)
-            )}/>
+        <div className='container'>
+          <div className='app'>
+            <div className='navbar'>
+              <Navbar/>
+            </div>
+              {/* <Route path='/' exact strict component = {Home}/> */}
+            <div className='home'>
+              <Route path='/' exact strict render={() => (
+                window.localStorage.getItem('loggedIn') === 'true' ? (<Home />) : (<Redirect to='/login' />)
+              )}/>
+            </div>
+              {/* <Route path='/login' exact strict component = {Login}/> */}
+            <div className='login'>
+              <Route path='/login' exact strict render={() => (
+                window.localStorage.getItem('loggedIn') !== 'true' ? (<div><Login /> <Signup /></div>) : (<Redirect to='/' />)
+              )}/>
+            </div>
+            <div className='dm'>
+              {/* <Route path='/dm' exact strict component={DmList} /> */}
+              <Route path='/dm' exact strict render={() => (
+                window.localStorage.getItem('loggedIn') === 'true' ? (<div><DmList location={this.props.location}/></div>) : (<Redirect to='/' />)
+              )}/>
+            </div>
           </div>
         </div>
       </Router>

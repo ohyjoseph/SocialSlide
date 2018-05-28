@@ -69,8 +69,11 @@ class DmList extends React.Component {
     return (
       <div>
         <h4>Direct Message</h4>
-        <span><input className="form-control" type="text" value={this.state.passwordText} onChange={this.handleChangeMessageText} onKeyPress={this.handleKeyPressEnter}/></span>
-        <button onClick={() => (this.sendMessageHandler())}> Send </button>
+        <nav className="navbar navbar-light bg-light form-inline">
+          <input className="form-control mr-sm-2" type="search" value={this.state.passwordText} onChange={this.handleChangeMessageText} onKeyPress={this.handleKeyPressEnter}/>
+          <button className='btn btn-success' onClick={() => (this.sendMessageHandler())}> Send </button>
+        </nav>
+        <br></br>
         <div style={{overflow: 'auto', width:'500px', height:'800px'}}>
             {this.state.dms.map((dm, ind) =>
               <DmListEntry key={ind} dm={dm}/>

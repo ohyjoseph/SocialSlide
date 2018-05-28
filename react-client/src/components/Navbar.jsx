@@ -12,21 +12,18 @@ const Navbar = (props) => {
   }
 
   return (
-    <div>
-      <h1>Social Slide</h1>
-      <ul>
-        <li>
-          <NavLink to="/" exact activeStyle={
-            { color:'green' }
-          }>Home</NavLink>
-        </li>
-        <li>
+    <div className='container-fluid bg-light'>
+      <h1 className='navbar-header'>
+      <NavLink to="/" exact>Social Slide</NavLink>
+      </h1>
+      <ul className='list-inline'>
+        <li className='list-inline'>
           <NavLink to="/login" exact activeStyle={
             { color:'green' }
           }>Login</NavLink>
         </li>
-        <li>
-          <button onClick={logoutHander}>
+        <li className='list-inline'>
+          <button className='btn btn-danger' onClick={logoutHander}>
             Logout
           </button>
         </li>
