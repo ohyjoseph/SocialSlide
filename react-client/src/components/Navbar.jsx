@@ -16,18 +16,9 @@ const Navbar = (props) => {
       <h1 className='navbar-header'>
       <NavLink to="/" exact>Social Slide</NavLink>
       </h1>
-      <ul className='list-inline'>
-        <li className='list-inline'>
-          <NavLink to="/login" exact activeStyle={
-            { color:'green' }
-          }>Login</NavLink>
-        </li>
-        <li className='list-inline'>
-          <button className='btn btn-danger' onClick={logoutHander}>
-            Logout
-          </button>
-        </li>
-      </ul>
+      <button className='btn btn-danger' onClick={logoutHander}>
+        Logout
+      </button>
     </div>
   )
 }
