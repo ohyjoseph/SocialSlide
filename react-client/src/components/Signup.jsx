@@ -24,8 +24,7 @@ class Signup extends React.Component {
   signupHandler() {
     axios.post('/signup', {username: this.state.usernameText, password: this.state.passwordText})
       .then((response) => {
-        console.log(response.data.command);
-        if ('SIGNUP',response.data.command === 'INSERT') {
+        if (response.data.command === 'INSERT') {
           window.localStorage.setItem('loggedIn', 'true');
           window.localStorage.setItem('username', this.state.usernameText);
           if (this.state.avatarUrl === '') {

@@ -71,6 +71,17 @@ app.post('/signup', function (req, res) {
   });
 });
 
+app.post('/friendrequest', function (req, res) {
+  // setHeader(res);
+  db.insertFriendRequest({sender: req.body.sender, receiver: req.body.receiver}, (err, results) => {
+    if (err) {
+      console.log(err)
+      res.send(err);
+    }
+    res.send(results);
+  });
+});
+
 app.listen(process.env.PORT || 3000, function() {
   console.log('listening on port 3000!');
 });

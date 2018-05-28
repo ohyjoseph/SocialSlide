@@ -1,10 +1,41 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import axios from 'axios';
 
-const ListItem = (props) => (
-  <div>
-    <h1>Home</h1>
-  </div>
-)
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      friendText: ''
+    }
+    this.handleChangeFriendText = this.handleChangeFriendText.bind(this);
+  }
 
-export default ListItem;
+  handleChangeFriendText(event) {
+    this.setState({friendText: event.target.value});
+  }
+
+  friendRequestHandler() {
+    axios.post('/friendrequest', {sender: window.localStorage.getItem('username'), receiver: this.state.friendText})
+      .then((response) => {
+        if (response.data.command === 'INSERT') {
+          console.log(`FRIEND REQUEST SENT TO: ${this.state.friendText}`);
+        } else {
+          console.error('ERROR friend request already sent');
+        }
+      }).catch((err) => {
+        console.error('ERROR login:', err);
+      })
+  }
+
+  render () {
+    return (
+      <div>
+        <h1>Home</h1>
+        <span> Username <input className="form-control" type="text" value={this.state.friendText} onChange={this.handleChangeFriendText}/> </span>
+        <button onClick={() => (this.friendRequestHandler())}> Send Friend Request </button>
+      </div>
+    )
+  }
+}
+
+export default Home;
