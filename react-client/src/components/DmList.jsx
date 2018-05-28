@@ -70,7 +70,7 @@ class DmList extends React.Component {
       <div>
         <h4>Direct Message</h4>
         <nav className="navbar navbar-light bg-light form-inline">
-          <input className="form-control mr-sm-2" type="search" value={this.state.passwordText} onChange={this.handleChangeMessageText} onKeyPress={this.handleKeyPressEnter}/>
+          <input className="form-control mr-sm-2" type="text" value={this.state.passwordText} onChange={this.handleChangeMessageText} onKeyPress={this.handleKeyPressEnter}/>
           <button className='btn btn-success' onClick={() => (this.sendMessageHandler())}> Send </button>
         </nav>
         <br></br>
