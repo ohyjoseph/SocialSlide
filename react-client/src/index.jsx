@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import { BrowserRouter as Router, Link, Redirect, Prompt} from 'react-router-dom';
+import { BrowserRouter as Router, Link, Redirect} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 
 import Navbar from './components/Navbar.jsx';
 import Home from './components/Home.jsx';
+import FriendRequestList from './components/FriendRequestList.jsx';
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 //withRouter 
@@ -27,7 +28,7 @@ class App extends React.Component {
           <div className='home'>
             {/* <Route path='/' exact strict component = {Home}/> */}
             <Route path='/' exact strict render={() => (
-              window.localStorage.getItem('loggedIn') === 'true' ? (<Home />) : (<Redirect to='/login' />)
+              window.localStorage.getItem('loggedIn') === 'true' ? (<div><Home /> <FriendRequestList /></div>) : (<Redirect to='/login' />)
             )}/>
           </div>
           <div className='login'>

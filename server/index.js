@@ -60,6 +60,17 @@ app.post('/login', function (req, res) {
   });
 });
 
+app.post('/friendrequests', function (req, res) {
+  // setHeader(res);
+  db.selectFriendRequests({receiver: req.body.receiver}, (err, results) => {
+    if (err) {
+      console.log(err)
+      res.send(err);
+    }
+    res.send(results);
+  });
+});
+
 app.post('/signup', function (req, res) {
   // setHeader(res);
   db.insertUser({username: req.body.username, password: req.body.password, avatarUrl: req.body.avatarUrl}, (err, results) => {

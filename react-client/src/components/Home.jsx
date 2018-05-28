@@ -14,7 +14,7 @@ class Home extends React.Component {
     this.setState({friendText: event.target.value});
   }
 
-  friendRequestHandler() {
+  sendFriendRequestHandler() {
     axios.post('/friendrequest', {sender: window.localStorage.getItem('username'), receiver: this.state.friendText})
       .then((response) => {
         if (response.data.command === 'INSERT') {
@@ -31,8 +31,8 @@ class Home extends React.Component {
     return (
       <div>
         <h1>Home</h1>
-        <span> Username <input className="form-control" type="text" value={this.state.friendText} onChange={this.handleChangeFriendText}/> </span>
-        <button onClick={() => (this.friendRequestHandler())}> Send Friend Request </button>
+        <span><input className="form-control" type="text" value={this.state.friendText} onChange={this.handleChangeFriendText}/> </span>
+        <button onClick={() => (this.sendFriendRequestHandler())}> Send Friend Request </button>
       </div>
     )
   }
