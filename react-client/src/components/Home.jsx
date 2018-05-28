@@ -20,7 +20,7 @@ class Home extends React.Component {
         if (response.data.command === 'INSERT') {
           console.log(`FRIEND REQUEST SENT TO: ${this.state.friendText}`);
         } else {
-          console.error('ERROR friend request already sent');
+          console.error('ERROR sending friend request');
         }
       }).catch((err) => {
         console.error('ERROR login:', err);

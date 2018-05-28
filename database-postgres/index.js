@@ -93,6 +93,10 @@ function insertMessage (params, cb) {
 }
 
 function insertFriendRequest (params, cb) {
+  if (params.sender === params.receiver) {
+    cb('ERROR cannot send request to yourself');
+    return;
+  }
   let queryString = 'INSERT INTO tblFriends (sender, receiver) VALUES ($1, $2)';
   client.query(queryString, [params.sender, params.receiver], (err, result) => {
     if (err) {
