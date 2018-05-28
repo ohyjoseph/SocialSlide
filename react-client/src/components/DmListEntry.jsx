@@ -5,7 +5,7 @@ const DmListEntry = (props) => {
   return (
     <div>
       <div>
-        {props.dm.sender}
+        <b>{props.dm.sender}</b>
       </div>
       <div>
         {props.dm.message}

@@ -47,7 +47,7 @@ function selectFriends (params, cb) {
 }
 
 function selectDms (params, cb) {
-  let queryString = 'SELECT sender, receiver, message, createdAt FROM tblDms WHERE (sender = $1 AND receiver = $2) OR (sender = $2 AND receiver = $1) ORDER BY dmId;';
+  let queryString = 'SELECT sender, receiver, message, createdAt FROM tblDms WHERE (sender = $1 AND receiver = $2) OR (sender = $2 AND receiver = $1) ORDER BY dmId desc;';
   client.query(queryString, [params.username, params.friend], (err, result) => {
     if (err) {
       console.error('ERROR selecting user:', err);

@@ -42,7 +42,7 @@ class App extends React.Component {
           <div className='dm'>
             {/* <Route path='/dm' exact strict component={DmList} /> */}
             <Route path='/dm' exact strict render={() => (
-              window.localStorage.getItem('loggedIn') === 'true' ? (<div><DmList /></div>) : (<Redirect to='/' />)
+              window.localStorage.getItem('loggedIn') === 'true' ? (<div><DmList location={this.props.location}/></div>) : (<Redirect to='/' />)
             )}/>
           </div>
         </div>

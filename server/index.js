@@ -119,6 +119,18 @@ app.post('/dms', function (req, res) {
   });
 });
 
+app.post('/senddm', function (req, res) {
+  // setHeader(res);
+  console.log('DMs:', req.body.username, req.body.friend)
+  db.insertMessage({sender: req.body.sender, receiver: req.body.receiver, message: req.body.message}, (err, results) => {
+    if (err) {
+      console.error(err);
+      res.send(err);
+    }
+    res.send(results);
+  });
+});
+
 app.put('/friendrequest', function (req, res) {
   // setHeader(res);
   console.log('friend put')

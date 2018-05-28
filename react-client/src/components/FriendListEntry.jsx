@@ -4,7 +4,7 @@ const FriendListEntry = (props) => {
 
   return (
     <div>
-      {props.friend.username}
+      <a href={window.location.href + 'dm?username=' + props.friend.username}>{props.friend.username}</a>
     </div>
   )
 }
