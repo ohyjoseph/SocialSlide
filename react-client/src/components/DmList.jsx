@@ -74,7 +74,7 @@ class DmList extends React.Component {
           <button className='btn btn-success' onClick={() => (this.sendMessageHandler())}> Send </button>
         </nav>
         <br></br>
-        <div style={{overflow: 'auto', width:'400px', height:'500px'}}>
+        <div style={{overflow: 'auto', width:'400px', height:'450px'}}>
             {this.state.dms.map((dm, ind) =>
               <DmListEntry key={ind} dm={dm}/>
             )}
