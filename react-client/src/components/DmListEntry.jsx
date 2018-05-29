@@ -3,7 +3,8 @@ import React from 'react';
 const DmListEntry = (props) => {
 
   return (
-    <div className="container bg-light">
+    window.localStorage.username === props.dm.sender ? 
+    <div className="container bg text-right">
       <div>
         <b>{props.dm.sender}</b>
       </div>
@@ -14,7 +15,19 @@ const DmListEntry = (props) => {
         {props.dm.message}
       </p>
       <br></br>
+    </div> :
+    <div className="container bg-light text-left">
+    <div>
+      <b>{props.dm.sender}</b>
     </div>
+    <div>
+      {props.dm.createdat}
+    </div>
+    <p>
+      {props.dm.message}
+    </p>
+    <br></br>
+  </div>
   )
 }
 
