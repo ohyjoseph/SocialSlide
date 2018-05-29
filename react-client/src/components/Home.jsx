@@ -26,10 +26,18 @@ class Home extends React.Component {
   sendFriendRequestHandler() {
     axios.post('/friendrequest', {sender: window.localStorage.getItem('username'), receiver: this.state.friendText})
       .then((response) => {
+        console.log(response)
         if (response.data.command === 'INSERT') {
           console.log(`FRIEND REQUEST SENT TO ${this.state.friendText}`);
         } else {
-          console.error('ERROR sending friend request');
+          console.error('ERROR sending friend request', response.data.code);
+          if (response.data.code === '23505') {
+            window.alert(`Request already sent to ${this.state.friendText}`);
+          } else if (response.data.code === '23503') {
+            window.alert(`User does not exist`);
+          } else {
+            window.alert('Cannot send request to yourself');
+          }
         }
       }).catch((err) => {
         console.error('ERROR login:', err);

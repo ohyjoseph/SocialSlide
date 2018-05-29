@@ -8,8 +8,8 @@ const DmListEntry = (props) => {
       <div>
         <b>{props.dm.sender}</b>
       </div>
-      <div>
-        {props.dm.createdat}
+      <div className='text-muted'>
+        {new Date(props.dm.createdat).toString().substring(4, new Date(props.dm.createdat).toString().length - 15)}
       </div>
       <p>
         {props.dm.message}
@@ -20,8 +20,8 @@ const DmListEntry = (props) => {
     <div>
       <b>{props.dm.sender}</b>
     </div>
-    <div>
-      {props.dm.createdat}
+    <div className='text-muted'>
+      {new Date(props.dm.createdat).toString().substring(4, new Date(props.dm.createdat).toString().length - 15)}
     </div>
     <p>
       {props.dm.message}

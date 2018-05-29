@@ -24,9 +24,11 @@ let rejectFriendRequestHandler = () => {
   return (
     <div>
       {props.friendRequest.sender}
+      &nbsp;
       <button className='btn-sm btn-success' onClick={acceptFriendRequestHandler}>
         Accept
       </button>
+      &nbsp;
       <button className='btn-sm btn-danger' onClick={rejectFriendRequestHandler}>
         Reject
       </button>
