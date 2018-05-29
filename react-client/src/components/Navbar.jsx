@@ -13,6 +13,7 @@ const Navbar = (props) => {
   }
 
   return (
+    window.localStorage.loggedIn === 'true' ? 
     <div className='container-fluid bg-light'>
       <h1 className='navbar-header'>
       <NavLink to="/" exact>Social Slide</NavLink>
@@ -20,6 +21,12 @@ const Navbar = (props) => {
       <button className='btn btn-danger' onClick={logoutHander}>
         Logout
       </button>
+    </div>
+    :
+    <div className='container-fluid bg-light'>
+      <h1 className='navbar-header'>
+      <NavLink to="/" exact>Social Slide</NavLink>
+      </h1>
     </div>
   )
 }

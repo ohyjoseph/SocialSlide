@@ -15,7 +15,8 @@ const DmListEntry = (props) => {
         {props.dm.message}
       </p>
       <br></br>
-    </div> :
+    </div>
+    :
     <div className="container bg-light text-left">
     <div>
       <b>{props.dm.sender}</b>

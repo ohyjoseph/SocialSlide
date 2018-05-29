@@ -30,6 +30,7 @@ class FriendList extends React.Component {
   render () {
     return (
       <div>
+      <br></br>
       <h4>Friends</h4>
         {this.state.friends.map((friend, ind) =>
           <FriendListEntry key={ind} friend={friend}/>
