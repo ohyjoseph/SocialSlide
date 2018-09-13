@@ -1,5 +1,6 @@
 const pg = require('pg');
 const config = require('./config');
+require('dotenv').config();
 
 var conString = process.env.DATABASE_URL || config.localPsqlConString;
 
