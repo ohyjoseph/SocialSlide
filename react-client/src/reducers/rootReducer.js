@@ -3,6 +3,11 @@ const initState = {
 }
 
 const rootReducer = (state = initState, action) => {
+  if (action.type === 'UPDATE_FRIENDS') {
+    return {
+      friends: action.friends
+    }
+  }
   return state;
 }
 

@@ -1,27 +1,27 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+
 import FriendListEntry from './FriendListEntry.jsx';
 
 class FriendList extends React.Component {  
   constructor(props) {
     super(props);
-    this.state = {
-      friends: []
-    }
     this.selectFriendsHandler = this.selectFriendsHandler.bind(this);
   }
 
-  componentWillMount() {
-    this.selectFriendsHandler();
+  componentDidMount() {
+    this.selectFriendsHandler().then((friends) => {
+      console.log('COMPONENTDIDMOUNT', friends);
+      this.props.updateFriends(friends);
+    });
   }
   
   selectFriendsHandler() {
-    axios.post('/friends', {username: window.localStorage.getItem('username')})
+    return axios.post('/friends', {username: window.localStorage.getItem('username')})
       .then((response) => {
         console.log(`FRIENDS: ${JSON.stringify(response.data)}`);
-        this.setState({
-          friends: response.data
-        });
+        return response.data;
       }).catch((err) => {
         console.error('ERROR selecting friends:', err);
       })
@@ -32,7 +32,7 @@ class FriendList extends React.Component {
       <div>
       <br></br>
       <h4>Friends</h4>
-        {this.state.friends.map((friend, ind) =>
+        {this.props.friends.map((friend, ind) =>
           <FriendListEntry key={ind} friend={friend}/>
         )}
       </div>
@@ -40,4 +40,17 @@ class FriendList extends React.Component {
   }
 }
 
-export default FriendList;
+const mapStateToProps = (state) => {
+  return {
+    friends: state.friends
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateFriends: (friends) => { dispatch({type: 'UPDATE_FRIENDS', friends: friends})}
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(FriendList);
